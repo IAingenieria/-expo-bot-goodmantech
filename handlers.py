@@ -11,6 +11,7 @@ from audio_handler import download_and_transcribe
 from image_handler import download_and_analyze
 from ai_processor import extract_prospect_data, generate_proposal
 from baserow_client import save_prospect, update_prospect, get_last_prospect
+from config import CLIENTE_EMPRESA, CLIENTE_BIENVENIDA, EXPO_NOMBRE, EXPO_STAND, EXPO_CIUDAD
 from pdf_generator import generate_proposal_pdf
 from email_sender import send_prospect_email
 
@@ -523,8 +524,9 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
 
 async def handle_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
-        "👋 *Bienvenido al asistente de captura de prospectos*\n\n"
-        "📍 *Stand 432 — Expo Empaques, Monterrey*\n\n"
+        f"👋 *Bienvenido — {CLIENTE_EMPRESA}*\n"
+        f"📍 *Stand {EXPO_STAND} — {EXPO_NOMBRE}, {EXPO_CIUDAD}*\n\n"
+        f"{CLIENTE_BIENVENIDA}\n\n"
         "Puedes enviarme:\n"
         "🎙️ *Audio* — describe la conversación con el prospecto\n"
         "📸 *Foto* — tarjeta de presentación o formulario\n"

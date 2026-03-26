@@ -16,6 +16,7 @@ from baserow_client import (
     generar_csv,
     search_prospects,
 )
+from config import EXPO_NOMBRE, EXPO_STAND
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +28,7 @@ ESTRELLA = {0: "Sin datos", 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐", 4: "⭐⭐⭐
 async def handle_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Muestra el Master Menu de comandos disponibles."""
     await update.message.reply_text(
-        "🤖 *Asistente Expo Empaques — Stand 432*\n"
+        f"🤖 *Asistente {EXPO_NOMBRE} — Stand {EXPO_STAND}*\n"
         "━━━━━━━━━━━━━━━━━━━━\n\n"
         "📥 *Captura de prospectos:*\n"
         "🎙️ Manda un *audio* — transcribe y guarda\n"
@@ -104,7 +105,7 @@ async def handle_revisar(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
     msg = (
         f"📊 *Calidad de Leads — {total} total*\n"
-        f"📍 Stand 432 | {date.today().strftime('%d/%m/%Y')}\n"
+        f"📍 Stand {EXPO_STAND} | {date.today().strftime('%d/%m/%Y')}\n"
         f"━━━━━━━━━━━━━━━━━━━━\n\n"
         + "\n".join(lineas_estrellas) +
         f"\n\n"

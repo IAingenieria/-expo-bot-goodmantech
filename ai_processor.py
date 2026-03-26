@@ -7,11 +7,15 @@ Procesamiento inteligente con Claude:
 import json
 import re
 import anthropic
-from config import ANTHROPIC_API_KEY, EXPO_NOMBRE, EXPO_STAND, EXPO_CIUDAD
+from config import (
+    ANTHROPIC_API_KEY, EXPO_NOMBRE, EXPO_STAND, EXPO_CIUDAD,
+    CLIENTE_EMPRESA, CLIENTE_GIRO, CLIENTE_PRODUCTOS
+)
 
 client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
 EXTRACTION_PROMPT = """Eres un asistente experto en captura de prospectos para exposiciones comerciales.
+Estás en el stand de {empresa} ({giro}) en {expo_nombre}, Stand {expo_stand}, {expo_ciudad}.
 
 Tu tarea: a partir del texto (transcripción de audio o imagen de tarjeta), extrae los datos del prospecto y genera un RESUMEN PROFESIONAL de la conversación.
 
@@ -73,7 +77,14 @@ def extract_prospect_data(texto: str) -> dict:
         dict con: nombre, telefono, email, empresa, cargo,
                   resumen, productos_interes, temperatura, notas_adicionales
     """
-    prompt = EXTRACTION_PROMPT.format(texto=texto)
+    prompt = EXTRACTION_PROMPT.format(
+        texto=texto,
+        empresa=CLIENTE_EMPRESA,
+        giro=CLIENTE_GIRO,
+        expo_nombre=EXPO_NOMBRE,
+        expo_stand=EXPO_STAND,
+        expo_ciudad=EXPO_CIUDAD,
+    )
 
     message = client.messages.create(
         model="claude-sonnet-4-6",

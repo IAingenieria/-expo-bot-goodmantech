@@ -1,0 +1,21 @@
+{
+  "_instrucciones": "Copia este archivo como config_cliente.json y llena con los datos de TU empresa y evento. NO subas config_cliente.json al repo (está en .gitignore).",
+
+  "empresa": "Nombre de tu empresa",
+  "giro": "Giro o descripción corta de tu empresa",
+  "contacto_nombre": "Tu nombre completo",
+  "contacto_tel": "81 XXXX XXXX",
+  "contacto_email": "correo@tuempresa.com",
+  "contacto_web": "www.tuempresa.com",
+  "logo": "logo.png",
+  "color_primario": "1565C0",
+
+  "expo_nombre": "Nombre del evento",
+  "expo_stand": "001",
+  "expo_ciudad": "Monterrey",
+  "expo_venue": "Nombre del recinto",
+
+  "bienvenida": "Bienvenido al Stand XXX de Tu Empresa en [Evento]. Manda un audio, foto o texto para registrar un prospecto.",
+
+  "productos_ejemplo": ["producto1", "producto2", "servicio1"]
+}

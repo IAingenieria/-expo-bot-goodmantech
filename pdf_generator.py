@@ -17,10 +17,20 @@ from config import (
     GT_EMAIL,
     GT_WEBSITE,
     GT_LOGO,
+    CLIENTE_EMPRESA,
+    CLIENTE_GIRO,
+    CLIENTE_COLOR,
 )
 
-# ─── Paleta de colores Goodman Tech ────────────────────────────────────────────────
-COLOR_PRIMARY = (30, 80, 160)      # Azul corporativo
+
+def _hex_to_rgb(hex_color: str) -> tuple:
+    """Convierte color hex (sin #) a tupla RGB."""
+    h = hex_color.lstrip("#")
+    return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
+
+
+# ─── Paleta de colores dinámica (desde config_cliente.json) ───────────────────
+COLOR_PRIMARY = _hex_to_rgb(CLIENTE_COLOR)   # Color corporativo del cliente
 COLOR_SECONDARY = (220, 60, 30)    # Naranja/rojo acento
 COLOR_LIGHT_GRAY = (245, 245, 245)
 COLOR_DARK_GRAY = (80, 80, 80)
@@ -63,12 +73,12 @@ class ProposalPDF(FPDF):
         self.set_text_color(*COLOR_WHITE)
         self.set_font("Helvetica", "B", 13)
         self.set_xy(0, 4)
-        self.cell(210, 10, "Goodman Tech", align="C")
+        self.cell(210, 10, _safe(CLIENTE_EMPRESA), align="C")
 
-        # Tagline
+        # Tagline / giro
         self.set_font("Helvetica", "", 7)
         self.set_xy(0, 11)
-        self.cell(210, 5, "Pinturas y Recubrimientos Industriales", align="C")
+        self.cell(210, 5, _safe(CLIENTE_GIRO[:60]), align="C")
 
         self.ln(12)
 
@@ -186,7 +196,7 @@ class ProposalPDF(FPDF):
         self.set_xy(14, y)
         self.set_font("Helvetica", "B", 9)
         self.set_text_color(*COLOR_PRIMARY)
-        self.cell(0, 5, "Contacto Goodman Tech", ln=True)
+        self.cell(0, 5, f"Contacto {_safe(CLIENTE_EMPRESA)}", ln=True)
         self.set_x(14)
         self.set_font("Helvetica", "", 9)
         self.set_text_color(*COLOR_DARK_GRAY)
@@ -247,7 +257,8 @@ def generate_proposal_pdf(prospect: dict, productos: list[dict], propuesta: str)
         [:30]
     )
     fecha = datetime.now().strftime("%Y%m%d_%H%M")
-    filename = f"Propuesta_Goodman Tech_{nombre_safe}_{fecha}.pdf"
+    empresa_safe = CLIENTE_EMPRESA.replace(" ", "_")[:20]
+    filename = f"Propuesta_{empresa_safe}_{nombre_safe}_{fecha}.pdf"
 
     tmp_path = os.path.join(tempfile.gettempdir(), filename)
     pdf.output(tmp_path)
