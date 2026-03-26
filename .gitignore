@@ -1,0 +1,24 @@
+# Variables de entorno — NUNCA subir al repo
+.env
+
+# Logs del bot
+bot.log
+bot.error.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# PDFs generados
+*.pdf
+
+# Temporales
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración de cliente (contienen datos privados)
+config_cliente.json
